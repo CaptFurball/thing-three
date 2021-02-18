@@ -1,24 +1,29 @@
 extends Node2D
 
-var Tile = preload("res://maze/tile.gd")
 var MazeGenerator = preload("res://maze/generator.gd")
+var Player = preload("res://Player.tscn")
 
 export(int, 3, 320, 1) var map_size_x : int = 10
 export(int, 3, 320, 1) var map_size_y : int = 10
 
-var actual_map_size : Vector2
-var tiles : Array = []
-
 func _ready():
-	actual_map_size.x = 2 * map_size_x + 1
-	actual_map_size.y = 2 * map_size_y + 1
+	var map_size : Vector2 = Vector2(map_size_x, map_size_y)
+	var maze_generator = MazeGenerator.new(map_size)
+	var tiles = maze_generator.get_tiles()
 
-	tiles = MazeGenerator.new(actual_map_size).get_tiles()
-	draw_tiles()
+	draw_tiles(tiles)
 
-func draw_tiles():
-	for col in actual_map_size.x:
-		for row in actual_map_size.y:
+	var player = Player.instance()
+	player.position = maze_generator.get_start_point_coordinates()
+	add_child(player)
+
+
+func draw_tiles(tiles):
+	var x = tiles.size()
+	var y = tiles[0].size()
+
+	for col in x:
+		for row in y:
 			var tile_map : TileMap = get_node("TileMap")
 			var tile_name : String = tiles[col][row].type
 			var tile_set_idx : int = tile_map.tile_set.find_tile_by_name(tile_name)
