@@ -1,37 +1,41 @@
 extends KinematicBody2D
 
-export var speed : int = 2
+export var speed : int = 50
 
-var velocity : Vector2
-
-func _ready():
-	pass # Replace with function body.
+var direction : Vector2 = Vector2(0, 0)
+var velocity  : Vector2 = Vector2(0, 0)
 
 func _physics_process(_delta):
-	velocity = Vector2.ZERO
+	direction = Vector2.ZERO
 	
 	if Input.is_action_pressed("move_up"):
-		velocity.y -= speed
-		$AnimatedSprite.play("bounce_back")
+		direction.y -= 1
 	
 	if Input.is_action_pressed("move_down"):
-		velocity.y += speed
-		$AnimatedSprite.play("bounce_front")
+		direction.y += 1
 		
 	if Input.is_action_pressed("move_left"):
-		velocity.x -= speed
-		$AnimatedSprite.play("bounce_side")
-		$AnimatedSprite.flip_h = true		
+		direction.x -= 1
 		
 	if Input.is_action_pressed("move_right"):
-		velocity.x += speed
+		direction.x += 1
+	
+	if (direction.x > 0):
 		$AnimatedSprite.play("bounce_side")
 		$AnimatedSprite.flip_h = false
-
-	move_and_collide(velocity)
-
+	elif (direction.x < 0):
+		$AnimatedSprite.play("bounce_side")
+		$AnimatedSprite.flip_h = true
+	elif (direction.y < 0):
+		$AnimatedSprite.play("bounce_back")
+	elif (direction.y > 0):
+		$AnimatedSprite.play("bounce_front")
+	
+	velocity = direction.normalized() * speed
+	
+	velocity = move_and_slide(velocity)
 
 func _on_AnimatedSprite_animation_finished():
-#	$AnimatedSprite.play("idle_1")
+	$AnimatedSprite.play("idle_1")
 	$AnimatedSprite.stop()
 	pass # Replace with function body.

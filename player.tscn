@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://assets/pixel.png" type="Texture" id=2]
@@ -173,14 +173,17 @@ animations = [ {
 "speed": 10.0
 } ]
 
+[sub_resource type="CapsuleShape2D" id=37]
+radius = 1.0
+height = 8.0
+
 [node name="Player" type="KinematicBody2D"]
-position = Vector2( 18.1354, 17.6895 )
+position = Vector2( 18.2016, 17.6895 )
 z_index = 1
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-speed = 1
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 0, 5 )
@@ -197,6 +200,8 @@ position = Vector2( 0, -5 )
 frames = SubResource( 35 )
 animation = "idle_1"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -3, 6, 3, 6, 4, 5, 3, 4, -3, 4, -4, 5 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 5 )
+rotation = 1.5708
+shape = SubResource( 37 )
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
