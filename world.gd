@@ -10,16 +10,16 @@ var actual_map_size : Vector2
 var tiles : Array = []
 
 func _ready():
-	self.actual_map_size.x = map_size_x + map_size_x + 1
-	self.actual_map_size.y = map_size_y + map_size_y + 1
+	actual_map_size.x = 2 * map_size_x + 1
+	actual_map_size.y = 2 * map_size_y + 1
 
-	self.tiles = MazeGenerator.new(self.actual_map_size).get_tiles()
-	self.draw_tiles()
+	tiles = MazeGenerator.new(actual_map_size).get_tiles()
+	draw_tiles()
 
 func draw_tiles():
-	for col in self.actual_map_size.x:
-		for row in self.actual_map_size.y:
-			var tile_map : TileMap = self.get_node("TileMap")
+	for col in actual_map_size.x:
+		for row in actual_map_size.y:
+			var tile_map : TileMap = get_node("TileMap")
 			var tile_name : String = tiles[col][row].type
 			var tile_set_idx : int = tile_map.tile_set.find_tile_by_name(tile_name)
 			
