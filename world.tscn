@@ -86,4 +86,3 @@ cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.541176, 0.541176, 0.541176, 1 )
