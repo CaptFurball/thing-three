@@ -70,6 +70,7 @@ func create_tiles():
 		
 		for y in size.y:
 			var tile = Tile.new()
+			var random_path = rng.randi_range(0, Tile.TYPE_PATH.size() - 1)
 			
 			if x == 0 || y == 0 :
 				tile.type = Tile.TYPE_WALL
@@ -78,7 +79,7 @@ func create_tiles():
 			elif x % 2 == 0 || y % 2 == 0:
 				tile.type = Tile.TYPE_WALL
 			else:
-				tile.type = Tile.TYPE_PATH
+				tile.type = Tile.TYPE_PATH[random_path]
 				
 			tile.position = Vector2(x, y)
 			tiles[x].append(tile)
@@ -99,14 +100,16 @@ func create_maze():
 			current = stack.pop_front()
 			is_backtracing = true			
 		else: 
+			var random_path = rng.randi_range(0, Tile.TYPE_PATH.size() - 1)
+			
 			if neighbor.x - current.x > 0:
-				tiles[current.x + 1][current.y].set_type(Tile.TYPE_PATH)
+				tiles[current.x + 1][current.y].set_type(Tile.TYPE_PATH[random_path])
 			elif neighbor.x - current.x < 0:
-				tiles[current.x - 1][current.y].set_type(Tile.TYPE_PATH)
+				tiles[current.x - 1][current.y].set_type(Tile.TYPE_PATH[random_path])
 			elif neighbor.y - current.y > 0:
-				tiles[current.x][current.y + 1].set_type(Tile.TYPE_PATH)
+				tiles[current.x][current.y + 1].set_type(Tile.TYPE_PATH[random_path])
 			elif neighbor.y - current.y < 0:
-				tiles[current.x][current.y - 1].set_type(Tile.TYPE_PATH)
+				tiles[current.x][current.y - 1].set_type(Tile.TYPE_PATH[random_path])
 					
 			stack.push_front(current)
 			
@@ -139,7 +142,7 @@ func get_random_neighbor(current) -> Vector2:
 	
 	# pick a random neighbor
 	if possible_neighbors.size() > 0:
-		var random_index : int = int(round(rng.randf_range(0, possible_neighbors.size() - 1)))
+		var random_index : int = int(round(rng.randi_range(0, possible_neighbors.size() - 1)))
 		return possible_neighbors[random_index]
 	
 	return current
@@ -152,15 +155,15 @@ func create_start_point():
 		random_x = rng.randi_range(1, size.x - 2)
 		random_y = rng.randi_range(1, size.y - 2)
 
-		if (tiles[random_x][random_y].get_type() == Tile.TYPE_PATH):
+		if Tile.TYPE_PATH.find(tiles[random_x][random_y].get_type()) != -1:
 			tiles[random_x][random_y].set_type(Tile.TYPE_START_POINT)
 			start_point = Vector2(random_x, random_y)
 			
 func create_end_point():
 	while end_point == Vector2(-1, -1):
-		var random_idx = round(rng.randf_range(0, deadend_stack.size() - 1))
+		var random_idx = round(rng.randi_range(0, deadend_stack.size() - 1))
 		var random_deadend = deadend_stack[random_idx]
 		
-		if tiles[random_deadend.x][random_deadend.y].get_type() == Tile.TYPE_PATH:
+		if Tile.TYPE_PATH.find(tiles[random_deadend.x][random_deadend.y].get_type()) != -1:
 			end_point = tiles[random_deadend.x][random_deadend.y].position
 			tiles[end_point.x][end_point.y].set_type(Tile.TYPE_END_POINT)

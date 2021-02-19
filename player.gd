@@ -51,7 +51,8 @@ func calculate_speed_mod():
 	speed_mod = clamp(speed_mod, 0.2, 1)
 
 func capture_mouse():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pass
 
 func _on_AnimatedSprite_animation_finished():
 	anim_sprite.play("idle")
