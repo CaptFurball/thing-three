@@ -1,7 +1,7 @@
 extends Node2D
 
 var MazeGenerator = preload("res://maze/generator.gd")
-var Player = preload("res://Player.tscn")
+var Player = preload("res://player.tscn")
 
 export(int, 3, 320, 1) var map_size_x : int = 10
 export(int, 3, 320, 1) var map_size_y : int = 10

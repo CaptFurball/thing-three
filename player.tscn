@@ -194,6 +194,10 @@ shadow_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+editor_draw_drag_margin = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 light_mask = 2

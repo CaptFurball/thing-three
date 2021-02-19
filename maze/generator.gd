@@ -89,10 +89,7 @@ func create_maze():
 	
 	tiles[current.x][current.y].set_visited()
 
-	var count = 0
 	while current != null:
-		count += 1
-
 		neighbor = get_random_neighbor(current)
 		
 		if current == neighbor:
@@ -102,9 +99,6 @@ func create_maze():
 			current = stack.pop_front()
 			is_backtracing = true			
 		else: 
-			if (current == start_point):
-				print(count)
-
 			if neighbor.x - current.x > 0:
 				tiles[current.x + 1][current.y].set_type(Tile.TYPE_PATH)
 			elif neighbor.x - current.x < 0:
