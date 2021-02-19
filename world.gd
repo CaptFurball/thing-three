@@ -22,10 +22,13 @@ func draw_tiles(tiles):
 	var x = tiles.size()
 	var y = tiles[0].size()
 
+	var tile_map : TileMap = get_node("TileMap")
+
 	for col in x:
 		for row in y:
-			var tile_map : TileMap = get_node("TileMap")
 			var tile_name : String = tiles[col][row].type
 			var tile_set_idx : int = tile_map.tile_set.find_tile_by_name(tile_name)
 			
 			tile_map.set_cell(col, row, tile_set_idx)
+			
+	tile_map.update_bitmask_region(Vector2.ZERO, Vector2(x - 1, y - 1))

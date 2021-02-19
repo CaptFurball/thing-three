@@ -35,20 +35,12 @@ func handle_movement():
 	if Input.is_action_pressed("move_right"):
 		direction = direction + Vector2.RIGHT
 
-	if (direction.y < 0):
-		anim_sprite.play("bounce_back")
-		calculate_speed_mod()
-	elif (direction.y > 0):
-		anim_sprite.play("bounce_front")
-		calculate_speed_mod()
-	elif (direction.x > 0):
-		anim_sprite.play("bounce_side")
-		anim_sprite.flip_h = false
-		calculate_speed_mod()
-	elif (direction.x < 0):
-		anim_sprite.play("bounce_side")
-		anim_sprite.flip_h = true
-		calculate_speed_mod()
+	if (direction != Vector2.ZERO):
+		anim_sprite.play("slide")
+		calculate_speed_mod()		
+
+	if Input.is_action_pressed("jump"):
+		anim_sprite.play("bounce")		
 
 	velocity = direction.normalized() * speed * speed_mod
 	velocity = move_and_slide(velocity)
@@ -56,11 +48,12 @@ func handle_movement():
 func calculate_speed_mod():
 	var frame_count : float = float(anim_sprite.frames.get_frame_count(anim_sprite.animation))
 	speed_mod = abs(sin((float(anim_sprite.frame) / frame_count) * 3.142))
+	speed_mod = clamp(speed_mod, 0.2, 1)
 
 func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _on_AnimatedSprite_animation_finished():
-	anim_sprite.play("idle_1")
+	anim_sprite.play("idle")
 	anim_sprite.stop()
 	pass # Replace with function body.
