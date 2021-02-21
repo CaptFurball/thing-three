@@ -9,7 +9,7 @@ export(int, 3, 320, 1) var map_size_y : int = 10
 
 func _ready():
 	var map_size : Vector2 = Vector2(map_size_x, map_size_y)
-	var maze = Maze.new(map_size, 2, 1)
+	var maze = Maze.new(map_size, 1, 1)
 	var tiles = maze.create_maze()
 
 	draw_tiles(tiles)
