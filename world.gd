@@ -9,13 +9,13 @@ export(int, 3, 320, 1) var map_size_y : int = 10
 
 func _ready():
 	var map_size : Vector2 = Vector2(map_size_x, map_size_y)
-	var maze = Maze.new(map_size)
+	var maze = Maze.new(map_size, 2, 1)
 	var tiles = maze.create_maze()
 
 	draw_tiles(tiles)
 
 	var player = Player.instance()
-	player.position = maze_generator.start_tile
+	player.position = maze.start_tile
 	add_child(player)
 
 
