@@ -1,20 +1,7 @@
 extends Reference
 
 const TYPE_WALL: String = "wall"
-const TYPE_PATH: Array = [
-	"path_0",
-	"path_1",
-	"path_2",
-	"path_3",
-	"path_4",
-	"path_5",
-	"path_6",
-	"path_7",
-	"path_8",
-	"path_9",
-	"path_10",
-	"path_11",
-]
+const TYPE_PATH: String = "path"
 
 const TYPE_START_POINT: String = "start_point"
 const TYPE_END_POINT: String = "end_point"
@@ -35,3 +22,18 @@ func set_type(type_name: String) :
 
 func get_type():
 	return self.type
+	
+func set_wall():
+	self.type = self.TYPE_WALL
+
+func set_path():
+	self.type = self.TYPE_PATH
+
+func set_start_tile():
+	self.type = self.TYPE_START_POINT
+
+func set_end_tile():
+	self.type = self.TYPE_END_POINT
+
+func set_position(x : int, y : int):
+	self.position = Vector2(x, y)
