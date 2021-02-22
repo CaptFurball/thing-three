@@ -12,37 +12,50 @@ func _ready():
 	var maze = Maze.new(map_size, 1, 1)
 	var tiles = maze.create_maze()
 
-	draw_tiles(tiles)
-
+	draw_floor(tiles)
+	draw_walls(tiles)
+	
 	var player = Player.instance()
-	player.position = maze.start_tile
+	player.position = maze.start_tile * 16 + Vector2(8, 8)
 	add_child(player)
 
-
-func draw_tiles(tiles):
+func draw_floor(tiles):
 	var x = tiles.size()
 	var y = tiles[0].size()
 
-	var tile_map : TileMap = get_node("TileMap")
+	var tile_map : TileMap = get_node("Floor")
+
+	for col in x:
+		for row in y:
+			var tile_set_idx : int = tile_map.tile_set.find_tile_by_name("path")
+			
+			var rng = RandomNumberGenerator.new()
+			rng.randomize()
+			
+			var sub_tile = self._get_subtile_coord(tile_set_idx)
+			tile_map.set_cell(col, row, tile_set_idx, false, false, false, sub_tile)
+			
+	tile_map.update_bitmask_region(Vector2.ZERO, Vector2(x - 1, y - 1))
+
+func draw_walls(tiles):
+	var x = tiles.size()
+	var y = tiles[0].size()
+
+	var tile_map : TileMap = get_node("Wall")
 
 	for col in x:
 		for row in y:
 			var tile_name : String = tiles[col][row].type
 			var tile_set_idx : int = tile_map.tile_set.find_tile_by_name(tile_name)
 			
-			if tile_name == Tile.TYPE_PATH:
-				var rng = RandomNumberGenerator.new()
-				rng.randomize()
-				
-				tile_map.set_cell(col, row, tile_set_idx, rng.randi_range(0, 1), rng.randi_range(0, 1))
-			else:
+			if tile_name == Tile.TYPE_WALL:
 				tile_map.set_cell(col, row, tile_set_idx)
 			
 	tile_map.update_bitmask_region(Vector2.ZERO, Vector2(x - 1, y - 1))
 
 func _get_subtile_coord(id):
-	var tiles = $TileMap.tile_set
-	var rect = Tile.tile_set.tile_get_region(id)
+	var tiles = $Floor.tile_set
+	var rect = $Floor.tile_set.tile_get_region(id)
 	var x = randi() % int(rect.size.x / tiles.autotile_get_size(id).x)
 	var y = randi() % int(rect.size.y / tiles.autotile_get_size(id).y)
 	return Vector2(x, y)

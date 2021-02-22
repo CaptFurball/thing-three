@@ -5,13 +5,7 @@ var Tile = preload("res://maze/tile.gd")
 const OUTER_BORDER_WIDTH = 1
 
 # TODO: Temporary hard coded, find a way to populate itself within parameters 
-const MAX_ROOMS = 5
-
-const ROOM_SIZE = [
-	Vector2(3, 3),
-	Vector2(3, 4),
-	Vector2(3, 5)
-]
+const MAX_ROOMS = 10
 #############################################################################
 
 var is_backtrace_mode : bool = false
@@ -50,10 +44,10 @@ func get_end_tile() -> Vector2:
 
 func create_maze():
 	self._create_walls()
-	self._create_paths()
-	self._create_rooms()
+	self._create_paths()	
 	self._create_start_tile()
 	self._create_end_tile()
+	self._create_rooms()	
 	return self.tiles
 
 func _create_walls():
@@ -147,11 +141,9 @@ func _create_rooms():
 	var map_area : float = map_rect.get_area()
 
 	for i in self.MAX_ROOMS:
-		position = self.dead_stack.pop_front()
+		position = self.dead_stack.front()
 
-		var random_idx = rng.randi_range(0, self.ROOM_SIZE.size() - 1)
-
-		var room = Rect2(position, self.ROOM_SIZE[random_idx])
+		var room = Rect2(position, Vector2(self.lane_width * 2 + self.inner_border_width, self.lane_width * 2 + self.inner_border_width))
 
 		if map_rect.encloses(room) && room.get_area() < map_area:
 			map_area -= room.get_area()
