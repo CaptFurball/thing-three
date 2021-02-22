@@ -662,4 +662,3 @@ cell_y_sort = true
 format = 1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0, 0, 0, 1 )
