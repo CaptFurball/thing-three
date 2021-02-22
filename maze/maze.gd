@@ -71,7 +71,7 @@ func _create_paths():
 
 	var path_rect : Rect2
 
-	self.tiles[current_position.x][current_position.y].set_visited()
+	self.tiles[current_position.x][current_position.y].visited = true
 
 	while current_position != null:
 		neighbor_position = self._get_random_neighbor(current_position)
@@ -92,7 +92,7 @@ func _create_paths():
 			for row in range(path_rect.position.y, path_rect.end.y):
 				for col in range(path_rect.position.x, path_rect.end.x):
 					self.tiles[col][row].set_path()
-					self.tiles[col][row].set_visited()
+					self.tiles[col][row].visited = true
 
 			self.path_stack.push_front(current_position)
 
@@ -104,19 +104,19 @@ func _get_random_neighbor(point : Vector2):
 	var steps : int = self.lane_width + self.wall_width
 
 	# top
-	if point.y - steps >= 0 && !self.tiles[point.x][point.y - steps].has_visited():
+	if point.y - steps >= 0 && !self.tiles[point.x][point.y - steps].visited:
 		possible_neighbors.append(Vector2(point.x, point.y - steps))
 		
 	# right
-	if point.x + steps < self.size.x && !self.tiles[point.x + steps][point.y].has_visited():
+	if point.x + steps < self.size.x && !self.tiles[point.x + steps][point.y].visited:
 		possible_neighbors.append(Vector2(point.x + steps, point.y))
 
 	# bottom
-	if point.y + steps < self.size.y && !self.tiles[point.x][point.y + steps].has_visited():
+	if point.y + steps < self.size.y && !self.tiles[point.x][point.y + steps].visited:
 		possible_neighbors.append(Vector2(point.x, point.y + steps))
 
 	# left
-	if point.x - steps >= 0 && !self.tiles[point.x - steps][point.y].has_visited():
+	if point.x - steps >= 0 && !self.tiles[point.x - steps][point.y].visited:
 		possible_neighbors.append(Vector2(point.x - steps, point.y))
 
 	randomize()
