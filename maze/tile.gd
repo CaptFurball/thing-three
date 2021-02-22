@@ -11,6 +11,9 @@ var position : Vector2 = Vector2.ZERO
 
 var visited : bool = false
 
+func _init(x : int, y : int):
+	self.position = Vector2(x, y)
+
 func set_visited() :
 	self.visited = true
 	

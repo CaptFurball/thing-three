@@ -1,15 +1,17 @@
 extends Node2D
 
-var Maze = preload("res://maze/maze.gd")
+var Maze   = preload("res://maze/maze.gd")
 var Player = preload("res://player.tscn")
-var Tile = preload("res://maze/tile.gd")
+var Tile   = preload("res://maze/tile.gd")
 
-export(int, 3, 320, 1) var map_size_x : int = 10
-export(int, 3, 320, 1) var map_size_y : int = 10
+export(int, 5, 320, 1) var map_size_x : int = 10
+export(int, 5, 320, 1) var map_size_y : int = 10
+export var lane_width : int = 1
+export var wall_width : int = 1
 
 func _ready():
 	var map_size : Vector2 = Vector2(map_size_x, map_size_y)
-	var maze = Maze.new(map_size, 1, 1)
+	var maze  = Maze.new(map_size, lane_width, wall_width)
 	var tiles = maze.create_maze()
 
 	draw_floor(tiles)

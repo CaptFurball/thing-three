@@ -88,13 +88,14 @@ height = 3.0
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 18.2016, 17.6895 )
+collision_layer = 2147483649
 script = ExtResource( 1 )
 speed = 80
 
 [node name="Light2D" type="Light2D" parent="."]
 scale = Vector2( 5, 5 )
 texture = ExtResource( 3 )
-texture_scale = 0.2
+texture_scale = 0.3
 color = Color( 0.00392157, 0.564706, 0.937255, 1 )
 range_item_cull_mask = 3
 shadow_enabled = true
