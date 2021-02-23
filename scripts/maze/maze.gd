@@ -4,7 +4,7 @@ extends Reference
 # Maze generation position vectors do not correlate with the actual pixels on screen
 # but rather the rows and columns indexes of a two dimensional array
 
-var Tile = preload("res://maze/tile.gd")
+var Tile = preload("res://scripts/maze/tile.gd")
 
 const OUTER_WALL_WIDTH = 1
 

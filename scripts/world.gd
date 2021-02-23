@@ -1,8 +1,9 @@
 extends Node2D
 
-var Maze   = preload("res://maze/maze.gd")
+var Maze   = preload("res://scripts/maze/maze.gd")
+var Tile   = preload("res://scripts/maze/tile.gd")
 var Player = preload("res://player.tscn")
-var Tile   = preload("res://maze/tile.gd")
+var TargetArea = preload("res://target_area.tscn")
 
 export(int, 5, 320, 1) var map_size_x : int = 10
 export(int, 5, 320, 1) var map_size_y : int = 10
@@ -20,6 +21,7 @@ func _ready():
 	self._draw_floor(tiles)
 	self._draw_walls(tiles)
 	self._set_player(maze.start_tile)
+	self._set_win_area(maze.end_tile * 16 + Vector2(8, 8))
 
 func _set_player(start_tile : Vector2):
 	var player = Player.instance()
@@ -49,6 +51,14 @@ func _draw_walls(tiles):
 			
 	self.wall_map.update_bitmask_region(Vector2.ZERO, Vector2(tiles.size() - 1, tiles.front().size() - 1))
 
+func _set_win_area(target_pos : Vector2):
+	var target_area = TargetArea.instance()
+	target_area.position = target_pos 
+	add_child(target_area)
+
+	target_area.connect("body_entered", self, "_on_TargetArea_body_entered")
+	pass
+
 func _get_subtile_coord(id : int) -> Vector2:
 	var tiles = self.floor_map.tile_set
 	var rect  = tiles.tile_get_region(id)
@@ -57,3 +67,8 @@ func _get_subtile_coord(id : int) -> Vector2:
 	var y = randi() % int(rect.size.y / tiles.autotile_get_size(id).y)
 	
 	return Vector2(x, y)
+
+func _on_TargetArea_body_entered(body):
+	if body.get_name() == "Player":
+		print("win")
+		pass
