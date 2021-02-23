@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://assets/pixel.png" type="Texture" id=2]
 [ext_resource path="res://assets/light.png" type="Texture" id=3]
+[ext_resource path="res://player_camera.gd" type="Script" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -96,16 +97,17 @@ speed = 80
 scale = Vector2( 5, 5 )
 texture = ExtResource( 3 )
 texture_scale = 0.3
-color = Color( 0.00392157, 0.564706, 0.937255, 1 )
+color = Color( 0.0352941, 0.592157, 0.956863, 1 )
 range_item_cull_mask = 3
 shadow_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
 smoothing_enabled = true
 editor_draw_drag_margin = true
+script = ExtResource( 4 )
+
+[node name="Tween" type="Tween" parent="Camera2D"]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 light_mask = 2

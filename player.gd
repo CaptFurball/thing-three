@@ -23,6 +23,9 @@ func handle_movement():
 	direction = Vector2.ZERO
 	speed_mod = 1.0
 
+	if Input.is_action_pressed("ui_cancel"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
 	if Input.is_action_pressed("move_up"):
 		direction = direction + Vector2.UP
 
@@ -51,7 +54,7 @@ func calculate_speed_mod():
 	speed_mod = clamp(speed_mod, 0.2, 1)
 
 func capture_mouse():
-#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	pass
 
 func _on_AnimatedSprite_animation_finished():
