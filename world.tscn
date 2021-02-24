@@ -5,8 +5,6 @@
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
-map_size_x = 5
-map_size_y = 5
 
 [node name="Floor" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
@@ -17,7 +15,7 @@ format = 1
 light_mask = 2
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 16, 16 )
-cell_y_sort = true
 format = 1
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="Fog" type="CanvasModulate" parent="."]
+color = Color( 0, 0, 0, 1 )
