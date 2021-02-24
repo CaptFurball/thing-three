@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+var Marker = preload("res://marker.tscn")
+
 export(int, 20, 80, 1) var speed : int = 50
 
 var direction : Vector2 = Vector2.ZERO
@@ -10,14 +12,17 @@ var is_moving : bool = false
 onready var anim_sprite : AnimatedSprite = $AnimatedSprite
 
 func _ready():
-	capture_mouse()
+	#capture_mouse()
+	pass
 
 func _input(event):
-	if event is InputEventMouseButton:
-		capture_mouse()
+	#if event is InputEventMouseButton:
+		#capture_mouse()
+	pass
 
 func _physics_process(_delta):
 	handle_movement()
+	handle_action()
 
 func handle_movement():
 	direction = Vector2.ZERO
@@ -47,6 +52,13 @@ func handle_movement():
 
 	velocity = direction.normalized() * speed * speed_mod
 	velocity = move_and_slide(velocity)
+
+func handle_action():
+	if Input.is_action_just_pressed("drop_marker"):
+		var marker = Marker.instance()
+		marker.position = position
+		marker.apply_central_impulse(position.direction_to(get_global_mouse_position()) * 100)
+		get_parent().add_child(marker)
 
 func calculate_speed_mod():
 	var frame_count : float = float(anim_sprite.frames.get_frame_count(anim_sprite.animation))
